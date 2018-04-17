@@ -3,38 +3,34 @@
 // this code is public domain, enjoy!
 
 #include <AFMotor.h>
+#include <AccelStepper.h>
 
 // Stepper motor on M3+M4 48 steps per revolution
-AF_Stepper stepper(48, 2);
+AF_Stepper motor1(48, 2);
+
+// Wrapper functions
+void forwardstep1(){
+  motor1.onestep(FORWARD, SINGLE);
+}
+void backwardstep1(){
+  motor1.onestep(BACKWARD, SINGLE);
+}
+
+AccelStepper stepper1(forwardstep1, backwardstep1);
 
 void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
   Serial.println("Motor party!");
 
-}
+  stepper1.setMaxSpeed(800.0);
+  stepper1.setAcceleration(400.0);
+  stepper1.moveTo(500);
 
-int i;
+}
 
 // Test the DC motor, stepper and servo ALL AT ONCE!
 void loop() {
-  for (i=0; i<255; i++) {  
-    stepper.step(1, FORWARD, INTERLEAVE);
-    delay(3);
- }
- 
-  for (i=255; i!=0; i--) {  
-    stepper.step(1, BACKWARD, INTERLEAVE);
-    delay(3);
- }
- 
-  for (i=0; i<255; i++) {
-  
-    delay(3);
-    stepper.step(1, FORWARD, DOUBLE);
- }
- 
-  for (i=255; i!=0; i--) {
-    stepper.step(1, BACKWARD, DOUBLE);
-    delay(3);
- }
+  if (stepper1.distanceToGo() == 0)
+    stepper1.moveTo(-stepper1.currentPosition());
+  stepper1.run();
 }
