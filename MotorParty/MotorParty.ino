@@ -18,19 +18,42 @@ void backwardstep1(){
 
 AccelStepper stepper1(forwardstep1, backwardstep1);
 
+// Potentiometer control
+int val = 0;
+int previous = 0;
+int long newval = 0;
+// END Pot. Control
+
 void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);           // set up Serial library at 9600 bps
   Serial.println("Motor party!");
 
-  stepper1.setMaxSpeed(800.0);
-  stepper1.setAcceleration(400.0);
-  stepper1.moveTo(500);
+  //stepper1.setMaxSpeed(800.0);  // Actual max speed of small Nema17 stepper
+  stepper1.setMaxSpeed(600.0);  // More torque
+  stepper1.setAcceleration(48000.0);
+  stepper1.moveTo(1000);
 
 }
 
 // Test the DC motor, stepper and servo ALL AT ONCE!
 void loop() {
-  if (stepper1.distanceToGo() == 0)
-    stepper1.moveTo(-stepper1.currentPosition());
-  stepper1.run();
+  // Potentiometer control
+  val = analogRead(A4);
+
+  if ((val > previous + 6) || (val < previous - 6)){
+    newval = map(val, 0, 1023, 0, 200);
+    stepper1.runToNewPosition(newval);
+    previous = val;
+  }
+  if (val == 0){
+    digitalWrite(13, HIGH);
+  }
+  else{
+    digitalWrite(13, LOW);
+  }
+  
+  //if (stepper1.distanceToGo() == 0)
+  //  stepper1.moveTo(-stepper1.currentPosition());
+  //stepper1.run();
 }
