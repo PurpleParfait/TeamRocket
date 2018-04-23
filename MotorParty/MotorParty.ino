@@ -36,32 +36,38 @@ int long newval = 0;
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);           // set up Serial library at 9600 bps
-  Serial.println("Motor party!");
 
   //stepper1.setMaxSpeed(400.0);  // Actual max speed of small Nema17 stepper
 
   float maxspeed = 200.0;  // More torque
   stepper1.setMaxSpeed(maxspeed);
+  stepper1.setSpeed(maxspeed);
   stepper2.setMaxSpeed(maxspeed);
+  stepper2.setSpeed(maxspeed);
   //stepper1.setAcceleration(48000.0);
-  float acceleration = 300;
+  //float acceleration = 200;
+  float acceleration = 48000;
   stepper1.setAcceleration(acceleration);
   stepper2.setAcceleration(acceleration);
   
   stepper1.moveTo(200);
-  stepper2.moveTo(400);
+  stepper2.moveTo(200);
 
 }
 
 // Test the DC motor, stepper and servo ALL AT ONCE!
 void loop() {
-  /*
+  
   // Potentiometer control
   val = analogRead(A4);
 
-  if ((val > previous + 12) || (val < previous - 12)){
+  stepper1.runSpeedToPosition();
+  stepper2.runSpeedToPosition();
+  
+  if ((val > previous + 50) || (val < previous - 50)){
     newval = map(val, 0, 1023, 0, 200);
-    stepper1.runToNewPosition(newval);
+    stepper1.moveTo(newval);
+    stepper2.moveTo(newval);
     previous = val;
   }
   if (val == 0){
@@ -70,13 +76,14 @@ void loop() {
   else{
     digitalWrite(13, LOW);
   }
-  */
   
+  /*
   if (stepper1.distanceToGo() == 0)
     stepper1.moveTo(-stepper1.currentPosition());
-  stepper1.run();
+  stepper1.runSpeedToPosition();
 
   if (stepper2.distanceToGo() == 0)
     stepper2.moveTo(-stepper2.currentPosition());
-  stepper2.run();
+  stepper2.runSpeedToPosition();
+  */
 }
