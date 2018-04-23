@@ -7,6 +7,8 @@
 
 // Stepper motor on M3+M4 48 steps per revolution
 AF_Stepper motor1(48, 2);
+AF_Stepper motor2(48, 1);
+
 
 // Wrapper functions
 void forwardstep1(){
@@ -15,8 +17,15 @@ void forwardstep1(){
 void backwardstep1(){
   motor1.onestep(BACKWARD, SINGLE);
 }
+void forwardstep2(){
+  motor2.onestep(FORWARD, SINGLE);
+}
+void backwardstep2(){
+  motor2.onestep(BACKWARD, SINGLE);
+}
 
 AccelStepper stepper1(forwardstep1, backwardstep1);
+AccelStepper stepper2(forwardstep2, backwardstep2);
 
 // Potentiometer control
 int val = 0;
@@ -30,12 +39,17 @@ void setup() {
   Serial.println("Motor party!");
 
   //stepper1.setMaxSpeed(400.0);  // Actual max speed of small Nema17 stepper
-  
-  stepper1.setMaxSpeed(200.0);  // More torque
-  stepper1.setAcceleration(48000.0);
-  //stepper1.setAcceleration(1000.0);
+
+  float maxspeed = 200.0;  // More torque
+  stepper1.setMaxSpeed(maxspeed);
+  stepper2.setMaxSpeed(maxspeed);
+  //stepper1.setAcceleration(48000.0);
+  float acceleration = 300;
+  stepper1.setAcceleration(acceleration);
+  stepper2.setAcceleration(acceleration);
   
   stepper1.moveTo(200);
+  stepper2.moveTo(400);
 
 }
 
@@ -61,5 +75,8 @@ void loop() {
   if (stepper1.distanceToGo() == 0)
     stepper1.moveTo(-stepper1.currentPosition());
   stepper1.run();
-  
+
+  if (stepper2.distanceToGo() == 0)
+    stepper2.moveTo(-stepper2.currentPosition());
+  stepper2.run();
 }
