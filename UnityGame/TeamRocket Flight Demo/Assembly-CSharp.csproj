@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\PlayerMovement.cs" />
+     <Compile Include="Assets\PlayerMovement_v2.cs" />
      <Compile Include="Assets\SerialComm\Scripts\Samples\SampleCustomDelimiter.cs" />
      <Compile Include="Assets\SerialComm\Scripts\Samples\SampleMessageListener.cs" />
      <Compile Include="Assets\SerialComm\Scripts\Samples\SampleTearDown.cs" />

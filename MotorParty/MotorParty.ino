@@ -29,6 +29,7 @@ AccelStepper stepper2(forwardstep2, backwardstep2);
 
 // Potentiometer control
 int val = 0;
+String serial_in = "0";
 int previous = 0;
 int long newval = 0;
 // END Pot. Control
@@ -58,12 +59,22 @@ void setup() {
 // Test the DC motor, stepper and servo ALL AT ONCE!
 void loop() {
   
-  // Potentiometer control
-  val = analogRead(A4);
 
   stepper1.runSpeedToPosition();
   stepper2.runSpeedToPosition();
-  
+
+  serial_in = Serial.read();
+
+  if (serial_in != ""){
+  val = serial_in.toInt();
+  newval = map(val, 0, 1023, 0, 200);
+  stepper1.moveTo(newval);
+  stepper2.moveTo(newval);
+  }
+  /*
+  // Potentiometer control
+  val = analogRead(A4);
+
   if ((val > previous + 50) || (val < previous - 50)){
     newval = map(val, 0, 1023, 0, 200);
     stepper1.moveTo(newval);
@@ -76,7 +87,7 @@ void loop() {
   else{
     digitalWrite(13, LOW);
   }
-  
+  */
   /*
   if (stepper1.distanceToGo() == 0)
     stepper1.moveTo(-stepper1.currentPosition());
