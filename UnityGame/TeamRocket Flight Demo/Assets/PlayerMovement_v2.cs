@@ -14,7 +14,7 @@ public class PlayerMovement_v2 : MonoBehaviour {
 	void Start () {
 		body = GetComponent<Rigidbody>();
 		serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-		InvokeRepeating ("SerialSend", 1.0f, 0.5f);
+		InvokeRepeating ("SerialSend", 1.0f, 1.0f);
 	}
 	
 	// Update is called once per frame
@@ -51,8 +51,10 @@ public class PlayerMovement_v2 : MonoBehaviour {
 
 	void SerialSend(){
 		
-		int message = Mathf.RoundToInt(body.velocity.z * 10);
-		Debug.Log (message);
-		serialController.SendSerialMessage(message.ToString());
+		int message = Mathf.RoundToInt (body.velocity.z * 30);
+
+		//serialController.SendSerialMessage (message.ToString ("0000"));
+		//Debug.Log (message.ToString (message));
+		serialController.SendSerialMessage ("L" + message);
 	}
 }

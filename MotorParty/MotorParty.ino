@@ -28,9 +28,10 @@ AccelStepper stepper1(forwardstep1, backwardstep1);
 AccelStepper stepper2(forwardstep2, backwardstep2);
 
 // Potentiometer control
-char incomingByte = 0;
 int previous = 0;
 int long newval = 0;
+int number_in = 0;
+String final_msg;
 // END Pot. Control
 
 void setup() {
@@ -38,7 +39,8 @@ void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
 
   //stepper1.setMaxSpeed(400.0);  // Actual max speed of small Nema17 stepper
-
+  stepper1.setMinPulseWidth(100);
+  stepper2.setMinPulseWidth(100);
   float maxspeed = 200.0;  // More torque
   stepper1.setMaxSpeed(maxspeed);
   stepper1.setSpeed(maxspeed);
@@ -50,8 +52,8 @@ void setup() {
   stepper1.setAcceleration(acceleration);
   stepper2.setAcceleration(acceleration);
   
-  //stepper1.moveTo(200);
-  //stepper2.moveTo(200);
+  stepper1.moveTo(200);
+  stepper2.moveTo(200);
 
 }
 
@@ -62,17 +64,31 @@ void loop() {
   stepper1.runSpeedToPosition();
   stepper2.runSpeedToPosition();
 
-
-
+ 
+  //numChars = Serial.readBytes(message_in,4);
+  //if (Serial.readBytes(message_in,4) == 4){
   if (Serial.available() > 0){
-    incomingByte = Serial.read();
+    if (Serial.peek() == 'L'){
+      Serial.read();
+      number_in = Serial.parseInt();
+    }
 
-    Serial.print(" I received: ");
-      Serial.println(incomingByte, DEC);
-    newval = map(incomingByte, 0, 1023, 0, 200);
+    final_msg = String(number_in);
+    
+    newval = final_msg.toInt();
+    stepper1.setSpeed(stepper1.distanceToGo());
     stepper1.moveTo(newval);
+    stepper2.setSpeed(stepper2.distanceToGo());
     stepper2.moveTo(newval); 
+
+    // Flush serial buffer
+    while(Serial.available() > 0){
+      char t = Serial.read();
+    }
   }
+  
+
+ 
   /*
   // Potentiometer control
   val = analogRead(A4);
