@@ -7,14 +7,14 @@ public class PlayerMovement_v2 : MonoBehaviour {
 	public SerialController serialController;
 	private Rigidbody body;
 	private float MaxSpeed = 100f;
-	private float Acceleration = 5f;	
-	private float Deceleration = -5f;
+	private float Acceleration = 3f;	
+	private float Deceleration = -3f;
 
 	// Use this for initialization
 	void Start () {
 		body = GetComponent<Rigidbody>();
 		serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-		InvokeRepeating ("SerialSend", 1.0f, 1.0f);
+		InvokeRepeating ("updateWingsuitValue", 1.0f, 1.0f);
 	}
 	
 	// Update is called once per frame
@@ -49,12 +49,28 @@ public class PlayerMovement_v2 : MonoBehaviour {
 		else body.velocity = new Vector3(0,0,body.velocity.z);
 	}
 
-	void SerialSend(){
-		
-		int message = Mathf.RoundToInt (body.velocity.z * 30);
-
-		//serialController.SendSerialMessage (message.ToString ("0000"));
-		//Debug.Log (message.ToString (message));
-		serialController.SendSerialMessage ("L" + message);
+	void updateWingsuitValue(){
+		int arm_height_L = Mathf.RoundToInt (body.velocity.z * 15);
+		int arm_height_R = Mathf.RoundToInt (body.velocity.z * 15);
+		SerialSend (arm_height_L, arm_height_R);
 	}
+
+	void SerialSend(int message_L, int message_R){
+
+		// FOR MOTOR BACKBACK
+		// Send in int values from 0 - 654 for each arm
+
+		message_L = Mathf.Clamp (message_L, 0, 654);
+		message_R = Mathf.Clamp (message_R, 0, 654);
+
+		serialController.SendSerialMessage ("L" + message_L);
+		serialController.SendSerialMessage ("R" + message_R);
+	}
+
+	void OnApplicationQuit()
+	{
+		Debug.Log("Closing and resetting servos");
+		SerialSend (0, 0);
+	}
+
 }

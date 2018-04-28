@@ -29,9 +29,12 @@ AccelStepper stepper2(forwardstep2, backwardstep2);
 
 // Potentiometer control
 int previous = 0;
-int long newval = 0;
-int number_in = 0;
-String final_msg;
+int long newval_L = 0;
+int long newval_R = 0;
+int number_in_L = 0;
+int number_in_R = 0;
+String final_msg_L = "";
+String final_msg_R = "";
 // END Pot. Control
 
 void setup() {
@@ -70,16 +73,25 @@ void loop() {
   if (Serial.available() > 0){
     if (Serial.peek() == 'L'){
       Serial.read();
-      number_in = Serial.parseInt();
+      number_in_L = Serial.parseInt();
+      Serial.read();
     }
-
-    final_msg = String(number_in);
+    if (Serial.peek() == 'R'){
+      Serial.read();
+      number_in_R = Serial.parseInt();
+      Serial.read();
+    }
+    Serial.println("Input num: ");
+    Serial.println(number_in_L);
+    final_msg_L = String(number_in_L);
+    final_msg_R = String(number_in_R);
     
-    newval = final_msg.toInt();
+    newval_L = final_msg_L.toInt();
+    newval_R = final_msg_R.toInt();
     stepper1.setSpeed(stepper1.distanceToGo());
-    stepper1.moveTo(newval);
+    stepper1.moveTo(newval_L);
     stepper2.setSpeed(stepper2.distanceToGo());
-    stepper2.moveTo(newval); 
+    stepper2.moveTo(newval_R); 
 
     // Flush serial buffer
     while(Serial.available() > 0){
