@@ -78,8 +78,8 @@ public class PlayerMovement_v2 : MonoBehaviour {
 	void updateWingsuitValue(){
 		//use body.moveRotation for this instead of velocity
 		//or EulerAngleVelocity.z
-		int arm_height_L = Mathf.RoundToInt (body.velocity.z * 15); //why 15?
-		int arm_height_R = Mathf.RoundToInt (body.velocity.z * 15);
+		int arm_height_L = Mathf.RoundToInt (326 - (EulerAngleVelocity.z * 15)); //why 15?
+			int arm_height_R = Mathf.RoundToInt (326 + (EulerAngleVelocity.z * 15));
 		SerialSend (arm_height_L, arm_height_R);
 	}
 	//only takes two ints- can probably be sent in any part of the program
