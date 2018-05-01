@@ -44,7 +44,7 @@ void setup() {
   //stepper1.setMaxSpeed(400.0);  // Actual max speed of small Nema17 stepper
   stepper1.setMinPulseWidth(100);
   stepper2.setMinPulseWidth(100);
-  float maxspeed = 200.0;  // More torque
+  float maxspeed = 150.0;  // More torque
   stepper1.setMaxSpeed(maxspeed);
   stepper1.setSpeed(maxspeed);
   stepper2.setMaxSpeed(maxspeed);
@@ -81,8 +81,8 @@ void loop() {
       number_in_R = Serial.parseInt();
       Serial.read();
     }
-    Serial.println("Input num: ");
-    Serial.println(number_in_L);
+    //Serial.println("Input num: ");
+    //Serial.println(number_in_L);
     final_msg_L = String(number_in_L);
     final_msg_R = String(number_in_R);
     

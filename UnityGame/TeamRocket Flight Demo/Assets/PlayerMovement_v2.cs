@@ -42,7 +42,7 @@ public class PlayerMovement_v2 : MonoBehaviour {
 				body.velocity = Vector3.zero;
 			}
 		}
-		//move left
+		//move leftw
 		if (Input.GetKey("a") && body.velocity.z > 0f) {
 			body.velocity = new Vector3(-5f, 0, body.velocity.z);
 			EulerAngleVelocity = new Vector3 (0, 0, 20);
@@ -79,7 +79,7 @@ public class PlayerMovement_v2 : MonoBehaviour {
 		//use body.moveRotation for this instead of velocity
 		//or EulerAngleVelocity.z
 		int arm_height_L = Mathf.RoundToInt (326 - (EulerAngleVelocity.z * 15)); //why 15?
-			int arm_height_R = Mathf.RoundToInt (326 + (EulerAngleVelocity.z * 15));
+		int arm_height_R = Mathf.RoundToInt (326 + (EulerAngleVelocity.z * 15));
 		SerialSend (arm_height_L, arm_height_R);
 	}
 	//only takes two ints- can probably be sent in any part of the program
