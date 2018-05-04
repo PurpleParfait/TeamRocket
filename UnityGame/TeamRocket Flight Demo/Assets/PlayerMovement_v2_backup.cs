@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,6 +48,7 @@ public class PlayerMovement_v2 : MonoBehaviour {
 			EulerAngleVelocity = new Vector3 (0, 0, 20);
 			Quaternion deltaRotation = Quaternion.Euler (EulerAngleVelocity * Time.deltaTime);
 			body.MoveRotation (body.rotation * deltaRotation);
+			body.AddForce(20,0,0);
 		}
 		//move right
 		else if (Input.GetKey("d") && body.velocity.z > 0f){
@@ -55,6 +56,7 @@ public class PlayerMovement_v2 : MonoBehaviour {
 			EulerAngleVelocity = new Vector3 (0, 0, -20);
 			Quaternion deltaRotation = Quaternion.Euler (EulerAngleVelocity * Time.deltaTime);
 			body.MoveRotation (body.rotation * deltaRotation);
+			body.AddForce(-20,0,0);
 		}
 
 		//tilt on z-axis

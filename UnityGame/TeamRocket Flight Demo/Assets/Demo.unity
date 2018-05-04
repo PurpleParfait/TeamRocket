@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37804228, g: 0.38763443, b: 0.36891094, a: 1}
+  m_IndirectSpecularColor: {r: 0.37804174, g: 0.3876342, b: 0.3689107, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -849,7 +849,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 2}
       propertyPath: portName
-      value: COM4
+      value: COM6
       objectReference: {fileID: 0}
     - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 2}
       propertyPath: maxUnreadMessages
@@ -1481,6 +1481,10 @@ Prefab:
     - target: {fileID: 400000, guid: bf495eacf58e31146ab012aa89ac68da, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bf495eacf58e31146ab012aa89ac68da, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf495eacf58e31146ab012aa89ac68da, type: 2}
@@ -2203,10 +2207,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1689724157}
-  - component: {fileID: 1689724159}
-  - component: {fileID: 1689724161}
   - component: {fileID: 1689724160}
   - component: {fileID: 1689724158}
+  - component: {fileID: 1689724159}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2247,9 +2250,9 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1689724156}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741d58689b8652a40807da27f5f15160, type: 3}
+  m_Script: {fileID: 11500000, guid: 1eec76f8ac21d104dac8ec5a18c28390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serialController: {fileID: 272482843}
@@ -2268,18 +2271,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1689724161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1689724156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e30dc91669e985a4ca1535820d75908b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serialController: {fileID: 0}
 --- !u!1001 &1819654804
 Prefab:
   m_ObjectHideFlags: 0
